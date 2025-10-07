@@ -209,6 +209,7 @@ const framework_regions_section_dropdown = document.getElementById("framework_re
         // TODO: Wire up to backend
         // fetch('/api/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...data, ...enrich}) });
         postProjectRequest({...data, ...enrich,...list})
+        alert("Your creation request has been successfully submitted")
     });
 
     // Reset all chip components too
