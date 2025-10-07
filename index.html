@@ -127,10 +127,6 @@
                         <label for="endDate">End Date</label>
                         <input id="endDate" name="endDate" type="date" />
                     </div>
-                    <div class="col-6">
-                        <label for="value">Budget / Value</label>
-                        <input id="value" name="value" type="text" placeholder="e.g., £1,200,000" />
-                    </div>
                     
                 </div>
             </fieldset>
@@ -138,6 +134,7 @@
                 <legend>Project Setup</legend>
                     <div class="col-12">
                         <label for="value">Project Type <span class="required">*</span></label>
+                        <p class="subline">Single is one project folder structure, framework is multiple project folder structures in an ACC project</p>
                         <select id="type" name="type" required>
                             <option value="" disabled selected>Select project type…</option>
                             <option>Single</option>
@@ -223,8 +220,8 @@
                     <input type="file" id="csvUpload" accept=".csv" style="display: none;" />
 
                     <!-- Custom-styled trigger button -->
-                    <button type="button" class="custom-btn" onclick="generateExcel()">Generate Excel</button>
-                    <button type="button" id="uploadBtn" class="custom-btn">📄 Import Emails from CSV</button>
+                    <button type="button" class="custom-btn hidden" onclick="generateExcel()">Generate Excel</button>
+                    <button type="button" id="uploadBtn" class="custom-btn hidden">📄 Import Emails from CSV</button>
                     
                     <button type="button" id="addRowBtn">+ Add Email Row</button>
             </fieldset>

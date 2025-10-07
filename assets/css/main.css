@@ -167,6 +167,13 @@ p.lead {
     font-size: 14px
 }
 
+p.subline {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
 form {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -442,6 +449,8 @@ pre#output {
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
+    margin-left: auto;
+    float: right;
   }
 
   #addRowBtn:hover {

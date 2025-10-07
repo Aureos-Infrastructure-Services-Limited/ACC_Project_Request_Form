@@ -5,6 +5,19 @@ document.addEventListener("DOMContentLoaded", async function () {
     await runGetCompanies()
     createEmailRow()
     hideLoadingSpinner()
+
+
+    const today = new Date();
+    const nextYear = new Date();
+    nextYear.setFullYear(today.getFullYear() + 1);
+
+    // Format to YYYY-MM-DD
+    const formatDate = date => date.toISOString().split('T')[0];
+
+    document.getElementById('startDate').value = formatDate(today);
+    document.getElementById('endDate').value = formatDate(nextYear);
+
+
     const addRowBtn = document.getElementById('addRowBtn');
     addRowBtn.addEventListener('click', () => createEmailRow());
     document.getElementById("uploadBtn").addEventListener("click", () => {
@@ -38,10 +51,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       
     document.getElementById("type").addEventListener("change", function() {
     const selectedValue = this.value;
-
+const framework_regions_section_dropdown = document.getElementById("framework_regions_section")
     if (selectedValue === "Framework") {
         // Do something when "Framework" is selected
-        document.getElementById("framework_regions_section").style.display = "block"
+        framework_regions_section_dropdown.style.display = "block"
+    }else{
+      framework_regions_section_dropdown.style.display = "none"
     }
     });
 
