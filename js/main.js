@@ -184,6 +184,7 @@ const framework_regions_section_dropdown = document.getElementById("framework_re
 
         const data = Object.fromEntries(new FormData(form).entries());
         // Replace comma-strings with arrays for readability
+
         const enrich = {};
       instances.forEach(inst=>{
         const name = inst.hidden.getAttribute('name');
@@ -203,9 +204,15 @@ const framework_regions_section_dropdown = document.getElementById("framework_re
             memberList.push(item);
             }
         });
-        const list = {'memberList':memberList}
-        out.textContent = JSON.stringify({...data, ...enrich,...list}, null, 2);
 
+        if(enrich.requestorEmail.length == 0){
+          alert("Please enter an email into the Requestor Email field, you may need to click on it an press enter to make it valid")
+          return
+        }
+        const list = {'memberList':memberList}
+        console.log('data',data, "enrich",enrich,"list",list)
+        out.textContent = JSON.stringify({...data, ...enrich,...list}, null, 2);
+        
         // TODO: Wire up to backend
         // fetch('/api/submit', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({...data, ...enrich}) });
         postProjectRequest({...data, ...enrich,...list})
