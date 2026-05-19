@@ -31,6 +31,7 @@
         </div>
         <div class="title">
             <h2>ACC Project Creation Form</h2>
+            <span id="testModeBadge" class="test-mode-badge hidden" aria-label="Test mode is on">TEST MODE</span>
         </div>
         <div class="profile-container" id="profileMenu">
             <img id="userPic" src="https://images.profile.autodesk.com/default/user_X58.png" alt="Profile"
@@ -41,6 +42,13 @@
                 </div>
                 <div><strong>Email:</strong>
                     <p id="userEmail"></p>
+                </div>
+                <div class="dropdown-toggle hidden" id="testModeMenuItem">
+                    <span class="dropdown-toggle-label">Test Mode</span>
+                    <label class="toggle-switch" aria-label="Toggle test mode">
+                        <input type="checkbox" id="testModeToggle" />
+                        <span class="toggle-slider"></span>
+                    </label>
                 </div>
                 <div class="logout" onclick="logout()">Logout</div>
             </div>
@@ -295,6 +303,9 @@
         <!-- Success screen, shown after a successful submission -->
         <div id="successScreen" class="success-screen hidden">
             <div class="success-card">
+                <div id="successTestBanner" class="success-test-banner hidden">
+                    TEST RUN — no project was created in ACC
+                </div>
                 <div class="success-icon" aria-hidden="true">✓</div>
                 <h2>Project request submitted</h2>
                 <p class="success-project">"<span id="successProjectName"></span>"</p>
@@ -303,6 +314,19 @@
                     notify the listed Project Managers by email once it's ready.
                 </p>
                 <button type="button" id="submitAnotherBtn" class="primary">Submit another request</button>
+            </div>
+        </div>
+
+        <!-- Dry-run modal, shown when submitting with test mode on -->
+        <div id="testRunModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="testRunModalTitle">
+            <div class="modal-backdrop"></div>
+            <div class="modal-card">
+                <h3 id="testRunModalTitle">Dry-run — payload preview</h3>
+                <p class="modal-sub">Test mode is on, so nothing was sent to Power Automate. The JSON below is what would have been submitted.</p>
+                <pre id="testRunPayload"></pre>
+                <div class="modal-actions">
+                    <button type="button" class="primary" id="testRunCloseBtn">Continue</button>
+                </div>
             </div>
         </div>
 

@@ -164,6 +164,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     // persistence, and review rendering.
     wizardInit({ chipsInstances: instances, form: document.getElementById('intakeForm') });
 
+    // Test-mode toggle inside the profile dropdown (allowlist-gated).
+    const testModeToggle = document.getElementById('testModeToggle');
+    if (testModeToggle) {
+        testModeToggle.addEventListener('change', () => {
+            setTestMode(testModeToggle.checked);
+            syncTestModeUi();
+        });
+    }
+
     const form = document.getElementById('intakeForm');
     const out = document.getElementById('output');
 
@@ -200,12 +209,26 @@ document.addEventListener("DOMContentLoaded", async function () {
         const payload = { ...data, ...enrich, memberList };
         out.textContent = JSON.stringify(payload, null, 2);
 
+        const testMode = getTestMode();
+
+        if (testMode) {
+            // Test mode: skip the real POST, log the payload, show a dry-run
+            // modal with the JSON, then show the success screen with the
+            // TEST RUN banner once the modal is dismissed.
+            console.log("[TEST MODE] Payload (not sent to Power Automate):", payload);
+            wizardClearState();
+            showTestRunModal(payload, () => {
+                showSuccessScreen(data.projectName, { testMode: true });
+            });
+            return;
+        }
+
         showLoadingSpinner();
         try {
             await postProjectRequest(payload);
             hideLoadingSpinner();
             wizardClearState();
-            showSuccessScreen(data.projectName);
+            showSuccessScreen(data.projectName, { testMode: false });
         } catch (err) {
             hideLoadingSpinner();
             console.error("Submission failed:", err);
@@ -359,4 +382,28 @@ function extractEmailsFromCSV(csvText) {
 
 function formatDate(date) {
     return date.toISOString().split('T')[0];
+}
+
+function showTestRunModal(payload, onClose) {
+    const modal = document.getElementById('testRunModal');
+    const pre = document.getElementById('testRunPayload');
+    const btn = document.getElementById('testRunCloseBtn');
+    const backdrop = modal.querySelector('.modal-backdrop');
+    if (!modal || !pre || !btn) return;
+
+    pre.textContent = JSON.stringify(payload, null, 2);
+    modal.classList.remove('hidden');
+
+    const dismiss = () => {
+        modal.classList.add('hidden');
+        btn.removeEventListener('click', dismiss);
+        if (backdrop) backdrop.removeEventListener('click', dismiss);
+        document.removeEventListener('keydown', onKey);
+        if (onClose) onClose();
+    };
+    const onKey = (e) => { if (e.key === 'Escape') dismiss(); };
+
+    btn.addEventListener('click', dismiss);
+    if (backdrop) backdrop.addEventListener('click', dismiss);
+    document.addEventListener('keydown', onKey);
 }

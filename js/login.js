@@ -10,7 +10,10 @@ async function getUserDetailsFill() {
     const profileMenu = document.getElementById('profileMenu');
     const dropdown = document.getElementById('dropdown');
 
-    profileMenu.addEventListener('click', () => {
+    profileMenu.addEventListener('click', (e) => {
+        // Interacting with the test-mode toggle inside the dropdown shouldn't
+        // close it — let the toggle's own change listener handle that click.
+        if (e.target.closest('.dropdown-toggle')) return;
         dropdown.classList.toggle('active');
     });
 
@@ -19,6 +22,9 @@ async function getUserDetailsFill() {
             dropdown.classList.remove('active');
         }
     });
+
+    // Reveal the test-mode toggle / badge if this user is allowlisted.
+    syncTestModeUi();
 }
 
 function logout() {

@@ -321,11 +321,14 @@ function escapeHtml(value) {
         .replace(/'/g, "&#39;");
 }
 
-function showSuccessScreen(projectName) {
+function showSuccessScreen(projectName, options = {}) {
+    const { testMode = false } = options;
     const successEl = document.getElementById("successScreen");
     const projectNameEl = document.getElementById("successProjectName");
     const formEl = document.getElementById("intakeForm");
+    const testBanner = document.getElementById("successTestBanner");
     if (projectNameEl) projectNameEl.textContent = projectName || "(unnamed)";
+    if (testBanner) testBanner.classList.toggle("hidden", !testMode);
     if (formEl) formEl.classList.add("hidden");
     if (successEl) successEl.classList.remove("hidden");
     window.scrollTo({ top: 0, behavior: "smooth" });
