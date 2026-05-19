@@ -544,5 +544,311 @@ pre#output {
 }
 
 .hidden {
+    display: none !important;
+}
+
+/* ───── Wizard ─────────────────────────────────────────────────────── */
+
+.stepper {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 4px;
+    counter-reset: step;
+}
+
+.step-indicator {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.step-indicator:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 60%;
+    right: -40%;
+    height: 2px;
+    background: var(--border);
+    z-index: 0;
+}
+
+.step-indicator.completed:not(:last-child)::after {
+    background: var(--ok);
+}
+
+.step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid var(--border);
+    color: var(--muted);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease;
+}
+
+.step-label {
+    font-weight: 600;
+    color: var(--muted);
+    max-width: 100px;
+    line-height: 1.2;
+}
+
+.step-indicator.active .step-num {
+    background: var(--primary);
+    border-color: var(--primary-2);
+    color: #fff;
+    box-shadow: var(--focus);
+}
+
+.step-indicator.active .step-label {
+    color: var(--text);
+}
+
+.step-indicator.completed .step-num {
+    background: var(--ok);
+    border-color: var(--ok);
+    color: #fff;
+}
+
+.step-indicator.completed .step-label {
+    color: var(--ok);
+}
+
+@media (max-width: 700px) {
+    .step-label {
+        display: none;
+    }
+    .step-indicator:not(:last-child)::after {
+        top: 16px;
+        left: 55%;
+        right: -45%;
+    }
+}
+
+.step-panel {
     display: none;
+}
+
+.step-panel.active {
+    display: block;
+}
+
+.step-error {
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+.wizard-nav {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+}
+
+.wizard-nav #backBtn {
+    margin-right: auto;
+}
+
+.wizard-nav #resetBtn {
+    color: var(--muted);
+}
+
+.wizard-nav #nextBtn,
+.wizard-nav #submitBtn {
+    background: linear-gradient(180deg, var(--primary), var(--primary-2));
+    border-color: var(--primary-2);
+    color: #fff;
+}
+
+.wizard-nav #nextBtn:hover,
+.wizard-nav #submitBtn:hover {
+    filter: brightness(1.03);
+}
+
+/* ───── Locked requestor email chips ───────────────────────────────── */
+
+.chips-field.locked .chips-wrap {
+    background: #f5f7fb;
+    border-color: var(--border-strong);
+}
+
+.chips-field.locked .chip {
+    background: #e6ecf5;
+    color: #1f2a44;
+    border-color: var(--border-strong);
+}
+
+.chips-field.locked .chip button {
+    display: none;
+}
+
+.chips-field.locked .chips-input input {
+    color: var(--muted);
+    cursor: not-allowed;
+}
+
+/* ───── Review summary (Step 5) ────────────────────────────────────── */
+
+.review-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 4px;
+}
+
+.review-section {
+    background: #fafbfd;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+}
+
+.review-section h3 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+}
+
+.review-section dl {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin: 0;
+}
+
+.review-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--border);
+}
+
+.review-row:last-child {
+    border-bottom: none;
+}
+
+.review-row dt {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.review-row dd {
+    margin: 0;
+    color: var(--text);
+    font-size: 14px;
+    word-break: break-word;
+}
+
+@media (max-width: 700px) {
+    .review-row {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+}
+
+.review-team {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.review-team th,
+.review-team td {
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.review-team th {
+    color: var(--muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: .04em;
+}
+
+.review-empty {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+}
+
+/* ───── Success screen ─────────────────────────────────────────────── */
+
+.success-screen {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+}
+
+.success-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 36px 32px;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+}
+
+.success-icon {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--ok);
+    color: #fff;
+    font-size: 40px;
+    line-height: 72px;
+    margin: 0 auto 20px;
+    box-shadow: 0 6px 20px rgba(15, 139, 76, 0.25);
+}
+
+.success-card h2 {
+    margin: 0 0 12px;
+    color: var(--text);
+    font-size: 22px;
+}
+
+.success-project {
+    margin: 0 0 12px;
+    font-weight: 700;
+    color: var(--text);
+    font-size: 18px;
+}
+
+.success-message {
+    margin: 0 0 24px;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+.success-card button {
+    min-width: 200px;
 }
