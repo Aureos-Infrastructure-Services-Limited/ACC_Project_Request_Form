@@ -1,0 +1,7 @@
+# Claude Code worktrees / session data (local only)
+.claude/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
