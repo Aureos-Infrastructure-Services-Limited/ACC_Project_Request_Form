@@ -1,4 +1,4 @@
-const appName = "Aureos ACC Project Creation Form";
+const appName = "Aureos Forma Project Creation Form";
 const appVersion = "v0.4.0 ALPHA";
 
 const account_id = "24d2d632-e01b-4ca0-b988-385be827cb04"

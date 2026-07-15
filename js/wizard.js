@@ -267,7 +267,7 @@ function renderReviewSummary() {
              <thead><tr><th>Email</th><th>Role</th><th>Company</th></tr></thead>
              <tbody>${team.map(t => `<tr><td>${escapeHtml(t.email)}</td><td>${escapeHtml(t.role)}</td><td>${escapeHtml(t.company)}</td></tr>`).join("")}</tbody>
            </table>`
-        : `<p class="review-empty">No initial team members added. You can add them in ACC after the project is created.</p>`;
+        : `<p class="review-empty">No initial team members added. You can add them in Forma after the project is created.</p>`;
 
     const regionsBlock = form.type === "Framework"
         ? `<div class="review-row"><dt>Regions / Groups</dt><dd>${list(chips.regions)}</dd></div>`
