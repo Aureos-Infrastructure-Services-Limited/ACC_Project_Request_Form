@@ -281,7 +281,17 @@ async function postProjectRequest(data) {
     if (!response.ok) {
         throw new Error(`Submission HTTP ${response.status}`);
     }
-    return response.json();
+    // Power Automate manual triggers return 202 Accepted with an empty body.
+    // Calling response.json() on that throws SyntaxError and used to surface as
+    // "Submission failed" to the user even though the flow accepted the request.
+    // Success is defined by the 2xx status — parse the body only if it's there.
+    const text = await response.text();
+    if (!text) return null;
+    try {
+        return JSON.parse(text);
+    } catch (_) {
+        return text;
+    }
 }
 
 function validateEmail(email) {
